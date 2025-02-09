@@ -136,4 +136,57 @@ public class DequeTest {
             assertEquals("Should have the same value", i, (double) deque.removeLast(), 0.0);
         }
     }
+
+    @Test
+    public void randomizedTest() {
+        Deque<Integer> deque1 = new LinkedListDeque<>();
+        Deque<Integer> deque2 = new LinkedListDeque<>();
+        for (int i = 0; i < 100000; i++) {
+            int operationNum = StdRandom.uniform(5);
+            switch (operationNum) {
+                case 0: { // addFirst
+                    int num = StdRandom.uniform(0, 100);
+                    deque1.addFirst(num);
+                    deque2.addFirst(num);
+                    break;
+                }
+                case 1: { // addLast
+                    int num = StdRandom.uniform(0, 100);
+                    deque1.addLast(num);
+                    deque2.addLast(num);
+                }
+                case 2: { // removeFirst
+                    boolean empty1 = deque1.isEmpty();
+                    boolean empty2 = deque2.isEmpty();
+                    assertEquals(empty1, empty2);
+                    if (empty1)
+                        continue;
+                    int ret1 = deque1.removeFirst();
+                    int ret2 = deque2.removeFirst();
+                    assertEquals(ret1, ret2);
+                }
+                case 3: { // removeLast
+                    boolean empty1 = deque1.isEmpty();
+                    boolean empty2 = deque2.isEmpty();
+                    assertEquals(empty1, empty2);
+                    if (empty1)
+                        continue;
+                    int ret1 = deque1.removeLast();
+                    int ret2 = deque2.removeLast();
+                    assertEquals(ret1, ret2);
+                }
+                case 4: { // get
+                    int size1 = deque1.size();
+                    int size2 = deque2.size();
+                    assertEquals(size1, size2);
+                    if (size1 == 0)
+                        continue;
+                    int pos = StdRandom.uniform(0, size1);
+                    int ret1 = deque1.get(pos);
+                    int ret2 = deque2.get(pos);
+                    assertEquals(ret1, ret2);
+                }
+            }
+        }
+    }
 }
