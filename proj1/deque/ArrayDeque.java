@@ -20,7 +20,6 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void checkExpand() {
         if (items.length == size) {
             T[] a = (T[]) new Object[2 * size];
-            assert(front == back);
             System.arraycopy(items, front, a, 0, items.length - front);
             System.arraycopy(items, 0, a, items.length - front, front);
             front = 0;
@@ -35,8 +34,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             T[] a = (T[]) new Object[2 * size];
             if (front < back) {
                 System.arraycopy(items, front, a, 0, size);
-            }
-            else {
+            } else {
                 System.arraycopy(items, front, a, 0, items.length - front);
                 System.arraycopy(items, 0, a, items.length - front, front);
             }
@@ -51,8 +49,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         checkExpand();
         if (front > 0) {
             front--;
-        }
-        else {
+        } else {
             front = items.length - 1;
         }
         items[front] = item;
@@ -65,8 +62,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[back] = item;
         if (back < items.length - 1) {
             back++;
-        }
-        else {
+        } else {
             back = 0;
         }
         size += 1;
@@ -87,8 +83,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
             for (int i = front; i < back; i++) {
                 System.out.print(items[i] + " ");
             }
-        }
-        else {
+        } else {
             for (int i = front; i < items.length; i++) {
                 System.out.print(items[i] + " ");
             }
@@ -109,8 +104,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         items[front] = null;
         if (front == items.length - 1) {
             front = 0;
-        }
-        else {
+        } else {
             front += 1;
         }
         size -= 1;
@@ -125,8 +119,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         checkShrink();
         if (back == 0) {
             back = items.length - 1;
-        }
-        else {
+        } else {
             back -= 1;
         }
         T ret = items[back];
@@ -139,25 +132,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     public T get(int index) {
         if (front + index < items.length) {
             return items[front + index];
-        }
-        else {
+        } else {
             return items[index - items.length + front];
         }
     }
 
     private class ArrayIterator implements Iterator<T> {
-        private int pos = front;
+        private int pos = 0;
         @Override
         public boolean hasNext() {
             if (size == 0) {
                 return false;
             }
-            return pos < back;
+            return pos < size();
         }
         @Override
         public T next() {
             pos += 1;
-            return items[pos - 1];
+            return get(pos - 1);
         }
     }
 

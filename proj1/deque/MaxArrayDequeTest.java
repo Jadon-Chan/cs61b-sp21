@@ -20,12 +20,13 @@ public class MaxArrayDequeTest {
     private static class DoubleComparator implements Comparator<Double> {
         @Override
         public int compare(Double a, Double b) {
-            if (Math.abs(a - b) < Math.pow(10, -6))
+            if (Math.abs(a - b) < Math.pow(10, -6)) {
                 return 0;
-            else if (a - b > 0)
+            } else if (a - b > 0) {
                 return 1;
-            else
+            } else {
                 return -1;
+            }
         }
     }
 
@@ -59,7 +60,7 @@ public class MaxArrayDequeTest {
         for (int i: test) {
             deque.addLast(i);
         }
-        assertEquals(59, (int)deque.max());
+        assertEquals(59, (int) deque.max());
     }
 
     @Test
@@ -81,7 +82,7 @@ public class MaxArrayDequeTest {
         for (Integer i: test) {
             deque.addLast(i);
         }
-        assertEquals(50852, (int)deque.max());
+        assertEquals(50852, (int) deque.max());
     }
 
     @Test
