@@ -24,7 +24,8 @@ public class TTFAF {
         }
 
         // You can also do this:
-        // GuitarPlayer player = new GuitarPlayer(new java.io.File("/Users/jadonchan/Documents/his_theme.mid"));
+        // GuitarPlayer player = new GuitarPlayer(
+        // new java.io.File());
         // player.play();
     }
 
