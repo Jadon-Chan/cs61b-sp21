@@ -100,9 +100,9 @@ public class DequeTest {
 
     @Test
     public void bigLLDequeTest() {
-//        Deque<Integer> deque1 = new LinkedListDeque<>();
+        Deque<Integer> deque1 = new LinkedListDeque<>();
         Deque<Integer> deque2 = new ArrayDeque<>();
-//        bigLLDequeTest(deque1);
+        bigLLDequeTest(deque1);
         bigLLDequeTest(deque2);
     }
     /* Add large number of elements to deque; check if order is correct. */
@@ -206,7 +206,7 @@ public class DequeTest {
                     assertEquals(ret1, ret2);
                     break;
                 }
-                case 4: { // get
+                default: { // get
                     int size1 = deque1.size();
                     int size2 = deque2.size();
                     assertEquals(size1, size2);
@@ -217,7 +217,6 @@ public class DequeTest {
                     int ret1 = deque1.get(pos);
                     int ret2 = deque2.get(pos);
                     assertEquals(ret1, ret2);
-                    break;
                 }
             }
         }

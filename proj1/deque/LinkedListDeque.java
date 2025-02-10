@@ -14,12 +14,11 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
             next = null;
         }
 
-        public T getRecursion(int index) {
+        public T getRecursive(int index) {
             if (index == 0) {
                 return item;
-            }
-            else {
-                return next.getRecursion(index - 1);
+            } else {
+                return next.getRecursive(index - 1);
             }
         }
     }
@@ -120,8 +119,8 @@ public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
         return np.item;
     }
 
-    public T getRecursion(int index) {
-        return sentinelF.next.getRecursion(index);
+    public T getRecursive(int index) {
+        return sentinelF.next.getRecursive(index);
     }
 
     private class ListIterator implements Iterator<T> {

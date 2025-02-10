@@ -37,8 +37,7 @@ public class GuitarHero {
             for (int i = 0; i < KEYBOARD.length(); i++) {
                 if (TIME[i] >= LASTING_TIME) {
                     TIME[i] = -1;
-                }
-                else if (TIME[i] >= 0) {
+                } else if (TIME[i] >= 0) {
                     sample += STRINGS[i].sample();
                     TIME[i] += 1;
                 }
