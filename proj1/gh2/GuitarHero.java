@@ -7,47 +7,40 @@ import edu.princeton.cs.algs4.StdDraw;
  * A client that uses the synthesizer package to replicate a plucked guitar string sound
  */
 public class GuitarHero {
-    private static final String keyboard = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
-    private static final GuitarString[] strings = new GuitarString[keyboard.length()];
-    private static final int lasting_time = 50000;
-    private static final int[] time = new int[keyboard.length()];
-
-    private static void play(GuitarString string) {
-        string.pluck();
-        for (int i = 0; i < 50000; i++) {
-            StdAudio.play(string.sample());
-            string.pluck();
-        }
-    }
+    private static final String KEYBOARD = "q2we4r5ty7u8i9op-[=zxdcfvgbnjmk,.;/' ";
+    private static final GuitarString[] STRINGS = new GuitarString[KEYBOARD.length()];
+    private static final int LASTING_TIME = 50000;
+    private static final int[] TIME = new int[KEYBOARD.length()];
 
     public static void main(String[] args) {
         /* create two guitar strings, for concert A and C */
-        for (int i = 0; i < keyboard.length(); i++) {
-            double frequency = 440 * Math.pow(2, (double)(i - 24)/12);
-            strings[i] = new GuitarString(frequency);
-            time[i] = -1;
+        for (int i = 0; i < KEYBOARD.length(); i++) {
+            double frequency = 440 * Math.pow(2, (double) (i - 24) / 12);
+            STRINGS[i] = new GuitarString(frequency);
+            TIME[i] = -1;
         }
 
         while (true) {
             /* check if the user has typed a key; if so, process it */
             if (StdDraw.hasNextKeyTyped()) {
                 char key = StdDraw.nextKeyTyped();
-                int index = keyboard.indexOf(key);
-                if (index < 0)
+                int index = KEYBOARD.indexOf(key);
+                if (index < 0) {
                     continue;
-                strings[index].pluck();
-                time[index] = 0;
+                }
+                STRINGS[index].pluck();
+                TIME[index] = 0;
             }
 
             /* compute the superposition of samples */
             double sample = 0.0;
-            for (int i = 0; i < keyboard.length(); i++) {
-                if (time[i] >= lasting_time) {
-                    time[i] = -1;
+            for (int i = 0; i < KEYBOARD.length(); i++) {
+                if (TIME[i] >= LASTING_TIME) {
+                    TIME[i] = -1;
                 }
-                else if (time[i] >= 0) {
-                    sample += strings[i].sample();
-                    time[i] += 1;
+                else if (TIME[i] >= 0) {
+                    sample += STRINGS[i].sample();
+                    TIME[i] += 1;
                 }
             }
 
@@ -55,8 +48,9 @@ public class GuitarHero {
             StdAudio.play(sample);
 
             /* advance the simulation of each guitar string by one step */
-            for (GuitarString string: strings)
+            for (GuitarString string: STRINGS) {
                 string.tic();
+            }
         }
     }
 }

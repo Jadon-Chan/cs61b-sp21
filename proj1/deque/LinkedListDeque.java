@@ -1,22 +1,26 @@
 package deque;
 
-public class LinkedListDeque<T> implements Deque<T>{
-    private static class Node<T> {
-        public T item;
-        public Node<T> prev;
-        public Node<T> next;
+import java.util.Iterator;
 
-        public Node() {
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T> {
+    private static class Node<T> {
+        private T item;
+        private Node<T> prev;
+        private Node<T> next;
+
+        Node() {
             this.item = null;
             prev = null;
             next = null;
         }
 
         public T getRecursion(int index) {
-            if (index == 0)
+            if (index == 0) {
                 return item;
-            else
+            }
+            else {
                 return next.getRecursion(index - 1);
+            }
         }
     }
 
@@ -25,8 +29,8 @@ public class LinkedListDeque<T> implements Deque<T>{
     private int size;
 
     public LinkedListDeque() {
-        sentinelF = new Node<T>();
-        sentinelB = new Node<T>();
+        sentinelF = new Node<>();
+        sentinelB = new Node<>();
         sentinelF.next = sentinelB;
         sentinelF.prev = null;
         sentinelB.prev = sentinelF;
@@ -80,8 +84,9 @@ public class LinkedListDeque<T> implements Deque<T>{
 
     @Override
     public T removeFirst() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         // re-link
         T ret = sentinelF.next.item;
         sentinelF.next = sentinelF.next.next;
@@ -93,8 +98,9 @@ public class LinkedListDeque<T> implements Deque<T>{
 
     @Override
     public T removeLast() {
-        if (size == 0)
+        if (size == 0) {
             return null;
+        }
         // re-link
         T ret = sentinelB.prev.item;
         sentinelB.prev = sentinelB.prev.prev;
@@ -116,5 +122,48 @@ public class LinkedListDeque<T> implements Deque<T>{
 
     public T getRecursion(int index) {
         return sentinelF.next.getRecursion(index);
+    }
+
+    private class ListIterator implements Iterator<T> {
+        private Node<T> pos = sentinelF;
+
+        @Override
+        public boolean hasNext() {
+            return pos.next != sentinelB;
+        }
+
+        @Override
+        public T next() {
+            pos = pos.next;
+            return pos.item;
+        }
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new ListIterator();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (!(obj instanceof Deque)) {
+            return false;
+        }
+        Deque<T> dp = (Deque<T>) obj;
+        if (dp.size() != size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (!dp.get(i).equals(get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 }

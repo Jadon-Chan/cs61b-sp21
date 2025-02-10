@@ -1,7 +1,6 @@
 package deque;
 
 import edu.princeton.cs.algs4.StdRandom;
-import jh61b.junit.In;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -18,7 +17,6 @@ public class DequeTest {
 
     /** Adds a few things to the list, checking isEmpty() and size() are correct,
      * finally printing the results.
-     *
      * && is the "and" operation. */
     private static void addIsEmptySizeTest(Deque<String> deque) {
         assertTrue("A newly initialized Deque should be empty", deque.isEmpty());
@@ -47,7 +45,7 @@ public class DequeTest {
         addRemoveTest(deque2);
     }
 
-    /** Adds an item, then removes an item, and ensures that deque is empty afterwards. */
+    /** Adds an item, then removes an item, and ensures that deque is empty afterward. */
     private static void addRemoveTest(Deque<Integer> deque) {
         // should be empty
         assertTrue("deque should be empty upon initialization", deque.isEmpty());
@@ -94,8 +92,10 @@ public class DequeTest {
     }
     /* check if null is return when removing from an empty LinkedListDeque. */
     private static void emptyNullReturnTest(Deque<Integer> deque) {
-        assertNull("Should return null when removeFirst is called on an empty Deque,", deque.removeFirst());
-        assertNull("Should return null when removeLast is called on an empty Deque,", deque.removeLast());
+        assertNull("Should return null when removeFirst is called on an empty Deque,",
+                deque.removeFirst());
+        assertNull("Should return null when removeLast is called on an empty Deque,",
+                deque.removeLast());
     }
 
     @Test
@@ -138,6 +138,32 @@ public class DequeTest {
     }
 
     @Test
+    public void iterationTest() {
+        ArrayDeque<Integer> deque1 = new ArrayDeque<>();
+        LinkedListDeque<Integer> deque2 = new LinkedListDeque<>();
+
+        for (int i = 0; i < 1000; i++) {
+            deque1.addLast(i);
+            deque2.addLast(i);
+        }
+
+        int count = 0;
+        for (int i: deque1) {
+            assertEquals(count, i);
+            count += 1;
+        }
+
+        count = 0;
+        for (int i: deque2) {
+            assertEquals(count, i);
+            count += 1;
+        }
+
+        assertEquals(deque1, deque2);
+        assertEquals(deque2, deque1);
+    }
+
+    @Test
     public void randomizedTest() {
         Deque<Integer> deque1 = new LinkedListDeque<>();
         Deque<Integer> deque2 = new LinkedListDeque<>();
@@ -154,37 +180,44 @@ public class DequeTest {
                     int num = StdRandom.uniform(0, 100);
                     deque1.addLast(num);
                     deque2.addLast(num);
+                    break;
                 }
                 case 2: { // removeFirst
                     boolean empty1 = deque1.isEmpty();
                     boolean empty2 = deque2.isEmpty();
                     assertEquals(empty1, empty2);
-                    if (empty1)
+                    if (empty1) {
                         continue;
+                    }
                     int ret1 = deque1.removeFirst();
                     int ret2 = deque2.removeFirst();
                     assertEquals(ret1, ret2);
+                    break;
                 }
                 case 3: { // removeLast
                     boolean empty1 = deque1.isEmpty();
                     boolean empty2 = deque2.isEmpty();
                     assertEquals(empty1, empty2);
-                    if (empty1)
+                    if (empty1) {
                         continue;
+                    }
                     int ret1 = deque1.removeLast();
                     int ret2 = deque2.removeLast();
                     assertEquals(ret1, ret2);
+                    break;
                 }
                 case 4: { // get
                     int size1 = deque1.size();
                     int size2 = deque2.size();
                     assertEquals(size1, size2);
-                    if (size1 == 0)
+                    if (size1 == 0) {
                         continue;
+                    }
                     int pos = StdRandom.uniform(0, size1);
                     int ret1 = deque1.get(pos);
                     int ret2 = deque2.get(pos);
                     assertEquals(ret1, ret2);
+                    break;
                 }
             }
         }
